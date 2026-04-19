@@ -88,7 +88,7 @@ def fill_empty_spaces(board):
     return True
 
 
-def generate_game_board(board, difficulty=1):
+def generate_game_board(board, difficulty):
     global game_board
     game_board = copy.deepcopy(board)
 
@@ -97,7 +97,7 @@ def generate_game_board(board, difficulty=1):
         random.randint(24, 29), random.randint(17, 23)
     ]
 
-    empty_spaces = difficulty_levels[difficulty]
+    empty_spaces = 81 - difficulty_levels[difficulty]
 
     for _ in range(empty_spaces):
         while True:
@@ -106,8 +106,9 @@ def generate_game_board(board, difficulty=1):
             col = random.randint(0, 2)
 
             if isinstance(game_board[row][sec][col], int):
-                game_board[row][sec][col] = 0
+                game_board[row][sec][col] = ' '
                 break
+    return game_board
 
 
 def print_board(board):
@@ -130,4 +131,4 @@ fill_small_boxes(full_board, index_bottom_right)
 fill_empty_spaces(full_board)
 
 # generating the game board
-generate_game_board(full_board, 1)
+# generate_game_board(full_board, 1)
