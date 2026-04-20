@@ -23,7 +23,7 @@
     color: #e5e08e;
 }
 
-form {
+.index-form {
     display: flex;
     background-color: #e5e08e;
     flex-direction: column;
@@ -33,12 +33,12 @@ form {
     align-items: center;
 }
 
-form div {
+.index-form div {
     margin: 20px;
     font-size: 40px;
 }
 
-form div select {
+.index-form div select {
     background-color: transparent;
     padding: 0 20px 0 20px;
     appearance: none;
@@ -48,11 +48,11 @@ form div select {
     outline: none;
 }
 
-form div select:hover {
+.index-form div select:hover {
     transform: scale(1.1);
 }
 
-form button {
+.index-form button {
     border: none;
     padding: 5px 50px 5px 50px;
     margin: 20px 0 0 0;
@@ -62,28 +62,107 @@ form button {
     color: #e5e08e;
 }
 
-form button:hover {
+.index-form button:hover {
     transform: scale(1.1);
     border-radius: 5px;
 }
 
+/* game styling - top bar */
+.top-bar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #27632b;
+}
 
-table {
+.top-bar .title {
+    font-size: 50px;
+    padding: 10px calc(50% - 200px) 10px calc(50% - 200px);
+}
+
+.top-bar .time-bar {
+    width: 190px;
+    display: flex;
+    margin: 0 0 0 10px;
+}
+
+.top-bar .time-bar .icon {
+    line-height: 30px;
+    font-size: 22px;
+}
+
+.top-bar .time-bar .clock {
+    font-size: 30px;
+    margin: 0 0 0 10px;
+}
+
+.top-bar .time-bar .clock, .top-bar .time-bar .icon {
+    color: #e5e08e;
+}
+
+.top-bar .back-btn {
+    margin: 20px;
+    width: 200px;
+    background: transparent;
+    border: none;
+    color: #e5e08e;
+    font-size: 30px;
+}
+
+.top-bar .back-btn:hover {
+    transform: scale(1.1);
+}
+
+/* game styling - game bar */
+.game-bar {
+    display: grid;
+    height: calc(100vh - 87px);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+}
+
+.game-bar .left {
+    display: grid;
+    place-items: center;
+}
+
+.game-bar .left table {
     border-collapse: collapse;
     border: 3px solid black;
 }
 
-td {
+.game-bar .left table tr td {
     border: 1px solid black;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     text-align: center;
 }
 
-td:nth-child(3n):not(:last-child) {
+.game-bar .left table tr td button, .game-bar .left table tr td button:disabled {
+    border: none;
+    background: transparent;
+    color: black;
+    width: 50px;
+    height: 50px;
+}
+
+.game-bar .left table tr td:nth-child(3n):not(:last-child) {
     border-right: 3px solid black;
 }
 
-tr:nth-child(3n):not(:last-child) td {
+.game-bar .left table tr:nth-child(3n):not(:last-child) td {
     border-bottom: 3px solid black;
+}
+
+/* media queries */
+@media screen and (max-width: 900px) {
+    .game-bar {
+        display: block;
+        height: auto;
+    }
+
+    .game-bar .left {
+        margin: 20px;
+    }
 }

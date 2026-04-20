@@ -1,27 +1,42 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<div class="top-bar">
+    <div class="time-bar">
+        <i class="fa-regular fa-clock icon"></i>
+        <h3 class="clock">00 : 00</h3>
+    </div>
+    <h1 class="title">{{ difficulty }}</h1>
+    <button class="back-btn" onclick="history.back()">back</button>
+</div>
 
-<table>
-{% for row in range(9) %}
-    <tr>
-    {% for sec in range(3) %}
-        {% for col in range(3) %}
-            <td>
-            {% if board[row][sec][col] is integer %}
-                <button class="btn btn-primary" type="button" disabled>
-                    {{ board[row][sec][col] }}
-                </button>
-            {% else %}
-                <button class="btn btn-primary" type="button">
-                    {{ board[row][sec][col] }}
-                </button>
-            {% endif %}
-            </td>
-        {% endfor %}  
-    {% endfor %}
-    </tr>
-{% endfor %}
-</table>
+<div class="game-bar">
+    <div class="left">
+        <table>
+            {% for row in range(9) %}
+            <tr>
+                {% for sec in range(3) %}
+                {% for col in range(3) %}
+                <td>
+                    <form action="/game", method="post">
+                        {% if board[row][sec][col] is integer %}
+                        <button class="btn btn-primary" type="submit" disabled id="{{row}}x{{sec}}x{{col}}" name="clicked-btn", value="{{row}}x{{sec}}x{{col}}">
+                            {{ board[row][sec][col] }}
+                        </button>
+                        {% else %}
+                        <button class="btn btn-primary" type="submit" id="{{row}}x{{sec}}x{{col}}" name="clicked-btn", value="{{row}}x{{sec}}x{{col}}"></button>
+                        {% endif %}
+                    </form>
+                </td>
+                {% endfor %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
+    <div class="right">
+        class
+    </div>
+</div>
 {% endblock %}
