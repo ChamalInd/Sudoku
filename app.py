@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect
 
-from helper.board import full_board, game_board, generate_game_board, print_board
+from helper.board import generate
 
 
 # configuring app
@@ -18,7 +18,12 @@ def after_request(response):
     return response
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
 def index():
-    # game_board = generate_game_board(full_board, 3)
     return render_template('index.html')
+
+
+@app.route('/game', methods=['POST', 'GET'])
+def game():
+    full_board, game_board = generate(1)
+    return render_template('game.html', board=game_board)

@@ -3,15 +3,15 @@ import copy
 
 # boiler plate of board
 full_board = [
-    [[['1x1x1'], ['1x1x2'], ['1x1x3']], [['1x2x1'], ['1x2x2'], ['1x2x3']], [['1x3x1'], ['1x3x2'], ['1x3x3']]],
-    [[['2x1x1'], ['2x1x2'], ['2x1x3']], [['2x2x1'], ['2x2x2'], ['2x2x3']], [['2x3x1'], ['2x3x2'], ['2x3x3']]],
-    [[['3x1x1'], ['3x1x2'], ['3x1x3']], [['3x2x1'], ['3x2x2'], ['3x2x3']], [['3x3x1'], ['3x3x2'], ['3x3x3']]],
-    [[['4x1x1'], ['4x1x2'], ['4x1x3']], [['4x2x1'], ['4x2x2'], ['4x2x3']], [['4x3x1'], ['4x3x2'], ['4x3x3']]],
-    [[['5x1x1'], ['5x1x2'], ['5x1x3']], [['5x2x1'], ['5x2x2'], ['5x2x3']], [['5x3x1'], ['5x3x2'], ['5x3x3']]],
-    [[['6x1x1'], ['6x1x2'], ['6x1x3']], [['6x2x1'], ['6x2x2'], ['6x2x3']], [['6x3x1'], ['6x3x2'], ['6x3x3']]],
-    [[['7x1x1'], ['7x1x2'], ['7x1x3']], [['7x2x1'], ['7x2x2'], ['7x2x3']], [['7x3x1'], ['7x3x2'], ['7x3x3']]],
-    [[['8x1x1'], ['8x1x2'], ['8x1x3']], [['8x2x1'], ['8x2x2'], ['8x2x3']], [['8x3x1'], ['8x3x2'], ['8x3x3']]],
-    [[['9x1x1'], ['9x1x2'], ['9x1x3']], [['9x2x1'], ['9x2x2'], ['9x2x3']], [['9x3x1'], ['9x3x2'], ['9x3x3']]], 
+    [['1x1x1', '1x1x2', '1x1x3'], ['1x2x1', '1x2x2', '1x2x3'], ['1x3x1', '1x3x2', '1x3x3']],
+    [['2x1x1', '2x1x2', '2x1x3'], ['2x2x1', '2x2x2', '2x2x3'], ['2x3x1', '2x3x2', '2x3x3']],
+    [['3x1x1', '3x1x2', '3x1x3'], ['3x2x1', '3x2x2', '3x2x3'], ['3x3x1', '3x3x2', '3x3x3']],
+    [['4x1x1', '4x1x2', '4x1x3'], ['4x2x1', '4x2x2', '4x2x3'], ['4x3x1', '4x3x2', '4x3x3']],
+    [['5x1x1', '5x1x2', '5x1x3'], ['5x2x1', '5x2x2', '5x2x3'], ['5x3x1', '5x3x2', '5x3x3']],
+    [['6x1x1', '6x1x2', '6x1x3'], ['6x2x1', '6x2x2', '6x2x3'], ['6x3x1', '6x3x2', '6x3x3']],
+    [['7x1x1', '7x1x2', '7x1x3'], ['7x2x1', '7x2x2', '7x2x3'], ['7x3x1', '7x3x2', '7x3x3']],
+    [['8x1x1', '8x1x2', '8x1x3'], ['8x2x1', '8x2x2', '8x2x3'], ['8x3x1', '8x3x2', '8x3x3']],
+    [['9x1x1', '9x1x2', '9x1x3'], ['9x2x1', '9x2x2', '9x2x3'], ['9x3x1', '9x3x2', '9x3x3']], 
 ]
 
 game_board = None
@@ -111,6 +111,15 @@ def generate_game_board(board, difficulty):
     return game_board
 
 
+def clear_board(board):
+    for row in range(9):
+        for sec in range(3):
+            for col in range(3):
+                board[row][sec][col] = f'{row + 1}x{sec + 1}x{col + 1}'
+
+    return board
+
+
 def print_board(board):
     for row in range(9):
         for sec in range(3):
@@ -122,13 +131,22 @@ def print_board(board):
             print()
 
 
-# filling diagonals
-fill_small_boxes(full_board, index_top_left)
-fill_small_boxes(full_board, index_middle)
-fill_small_boxes(full_board, index_bottom_right)
+def generate(difficulty):
+    global index_bottom_right, index_middle, index_bottom_right, full_board
 
-# filling empty spaces
-fill_empty_spaces(full_board)
+    # clear previously generated board
+    full_board = clear_board(full_board)
 
-# generating the game board
-# generate_game_board(full_board, 1)
+    # filling diagonals
+    fill_small_boxes(full_board, index_top_left)
+    fill_small_boxes(full_board, index_middle)
+    fill_small_boxes(full_board, index_bottom_right)
+
+    # filling empty spaces
+    fill_empty_spaces(full_board)
+
+    # generating game board
+    game_board = generate_game_board(full_board, difficulty)
+
+    return full_board, game_board
+

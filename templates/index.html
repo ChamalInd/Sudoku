@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1 class="title">Sudoku</h1>
+
+<form action="/game" method="get">
+    <div>
+        <label for="difficulty">Difficulty : </label>
+        <select name="difficulty" id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+            <option value="extreme">Extreme</option>
+        </select>
+    </div>
+    <button type="submit">Play Now</button>
+</form>
+{% endblock %}

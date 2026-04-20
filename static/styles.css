@@ -1,0 +1,89 @@
+/* setting new font from local file  */
+@font-face {
+    font-family: "Sudoku";
+    src: url("/static/Sudoku.ttf") format("truetype");
+}
+
+
+/* layout styling */
+* {
+    font-family: "Sudoku", Helvetica;
+    transition: all 0.3s ease;
+}
+
+
+/* index styling  */
+.title {
+    text-align: center;
+    font-size: 100px;
+    font-weight: bolder;
+    padding: 50px 0 50px 0;
+    margin: 0;
+    background-color: #27632b;
+    color: #e5e08e;
+}
+
+form {
+    display: flex;
+    background-color: #e5e08e;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 220px);
+    justify-content: center;
+    align-items: center;
+}
+
+form div {
+    margin: 20px;
+    font-size: 40px;
+}
+
+form div select {
+    background-color: transparent;
+    padding: 0 20px 0 20px;
+    appearance: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+form div select:hover {
+    transform: scale(1.1);
+}
+
+form button {
+    border: none;
+    padding: 5px 50px 5px 50px;
+    margin: 20px 0 0 0;
+    font-size: 40px;
+    border-radius: 10px;
+    background-color: #27632b;
+    color: #e5e08e;
+}
+
+form button:hover {
+    transform: scale(1.1);
+    border-radius: 5px;
+}
+
+
+table {
+    border-collapse: collapse;
+    border: 3px solid black;
+}
+
+td {
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}
+
+td:nth-child(3n):not(:last-child) {
+    border-right: 3px solid black;
+}
+
+tr:nth-child(3n):not(:last-child) td {
+    border-bottom: 3px solid black;
+}

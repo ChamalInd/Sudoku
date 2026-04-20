@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<table>
+{% for row in range(9) %}
+    <tr>
+    {% for sec in range(3) %}
+        {% for col in range(3) %}
+            <td>
+            {% if board[row][sec][col] is integer %}
+                <button class="btn btn-primary" type="button" disabled>
+                    {{ board[row][sec][col] }}
+                </button>
+            {% else %}
+                <button class="btn btn-primary" type="button">
+                    {{ board[row][sec][col] }}
+                </button>
+            {% endif %}
+            </td>
+        {% endfor %}  
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
