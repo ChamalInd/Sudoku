@@ -47,10 +47,16 @@ def game():
 def update_game_board():
     board = request.get_json()['board']
     current = request.get_json()['active']
+
+    print_board(full_board)
+    print_board(board)
     
     server_message = 'incorrect'
     if board[current[0]][current[1]][current[2]] == full_board[current[0]][current[1]][current[2]]:
         server_message = 'correct'
+
+    if board == full_board:
+        server_message = 'done'
 
     return jsonify(
         {

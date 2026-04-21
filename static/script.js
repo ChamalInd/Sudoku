@@ -122,7 +122,10 @@ async function syncWithServer() {
             selectedBtn.classList.add('error');
         } else if (serverResponse.server_message === 'correct' || selectedBtn.innerText === '') {
             selectedBtn.classList.remove('error');
+        } else if (serverResponse.server_message === 'done') {
+            alert('Done');
         }
+
     } catch (error) {
         alert('Sync faild ' + error);
     }
