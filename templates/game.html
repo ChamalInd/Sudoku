@@ -7,7 +7,9 @@
         <h3 class="clock">00 : 00</h3>
     </div>
     <h1 class="title">{{ difficulty }}</h1>
-    <button class="back-btn" onclick="history.back()">back</button>
+    <a href="/">
+        <button class="back-btn">back</button>
+    </a>
 </div>
 
 <div class="game-bar">
@@ -18,15 +20,13 @@
                 {% for sec in range(3) %}
                 {% for col in range(3) %}
                 <td>
-                    <form action="/game", method="post">
-                        {% if board[row][sec][col] is integer %}
-                        <button class="btn btn-primary" type="submit" disabled id="{{row}}x{{sec}}x{{col}}" name="clicked-btn", value="{{row}}x{{sec}}x{{col}}">
-                            {{ board[row][sec][col] }}
-                        </button>
-                        {% else %}
-                        <button class="btn btn-primary" type="submit" id="{{row}}x{{sec}}x{{col}}" name="clicked-btn", value="{{row}}x{{sec}}x{{col}}"></button>
-                        {% endif %}
-                    </form>
+                    {% if board[row][sec][col] is integer %}
+                    <button class="sudoku-btns" type="button" disabled id="{{row}}x{{sec}}x{{col}}">
+                        {{ board[row][sec][col] }}
+                    </button>
+                    {% else %}
+                    <button class="sudoku-btns" type="button" id="{{row}}x{{sec}}x{{col}}" onclick="buttonSelect(this)"></button>
+                    {% endif %}
                 </td>
                 {% endfor %}
                 {% endfor %}
@@ -36,7 +36,22 @@
     </div>
 
     <div class="right">
-        class
+        <div class="btn-grid">
+            <button type="button" id="1" onclick="keyPadAction(this)">1</button>
+            <button type="button" id="2" onclick="keyPadAction(this)">2</button>
+            <button type="button" id="3" onclick="keyPadAction(this)">3</button>
+            <button type="button" id="4" onclick="keyPadAction(this)">4</button>
+            <button type="button" id="5" onclick="keyPadAction(this)">5</button>
+            <button type="button" id="6" onclick="keyPadAction(this)">6</button>
+            <button type="button" id="7" onclick="keyPadAction(this)">7</button>
+            <button type="button" id="8" onclick="keyPadAction(this)">8</button>
+            <button type="button" id="9" onclick="keyPadAction(this)">9</button>
+        </div>
+        <div class="control-grid">
+            <button type="button" id="c" onclick="keyPadAction(this)">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
     </div>
 </div>
 {% endblock %}
