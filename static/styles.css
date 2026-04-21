@@ -148,6 +148,7 @@ body {
 
 .game-bar .left table tr td button, .game-bar .left table tr td button:disabled {
     border: none;
+    font-size: 20px;
     padding: 0;
     background-color: white;
     color: black;
@@ -161,6 +162,15 @@ body {
 
 .others:not(.active) {
     background-color: rgb(232, 232, 232) !important;
+}
+
+.error {
+    background-color: #ec6765 !important;
+    color: white !important;
+}
+
+.game-bar .left table tr td button:not(:disabled) {
+    color: #27632b;
 }
 
 .game-bar .left table tr td button:hover:not(:disabled) {

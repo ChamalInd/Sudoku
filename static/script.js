@@ -108,17 +108,21 @@ async function syncWithServer() {
         } else {
             gameBoard[index[0]][index[1]][index[2]] = Number(btns[i].innerText);
         }
-        // alert(gameBoard[index[0]][index[1]][index[2]]);
     }
 
-    // alert(gameBoard[8][2][2]);
-
     try {
-        await fetch('/update-board', {
+        const response = await fetch('/update-board', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ current_state: gameBoard })
+            body: JSON.stringify({ board: gameBoard, active: selectedBtn.id.split('x').map(Number) })
         });
+
+        const serverResponse = await response.json();
+        if (serverResponse.server_message === 'incorrect' && selectedBtn.innerText) {
+            selectedBtn.classList.add('error');
+        } else if (serverResponse.server_message === 'correct' || selectedBtn.innerText === '') {
+            selectedBtn.classList.remove('error');
+        }
     } catch (error) {
         alert('Sync faild ' + error);
     }

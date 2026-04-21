@@ -40,15 +40,21 @@ def game():
         
         # generating the board 
         full_board, game_board = generate(difficulty_level)
-        print_board(full_board)
 
     return render_template('game.html', board=game_board, difficulty=difficulty)
 
 @app.route('/update-board', methods=['POST'])
 def update_game_board():
-    board = request.get_json()['current_state']
-    if board == full_board:
-        print('well done')
-        
+    board = request.get_json()['board']
+    current = request.get_json()['active']
     
-    return jsonify({'status': 'updated'})
+    server_message = 'incorrect'
+    if board[current[0]][current[1]][current[2]] == full_board[current[0]][current[1]][current[2]]:
+        server_message = 'correct'
+
+    return jsonify(
+        {
+            'status': 'updated',
+            'server_message': server_message
+        }
+    )
