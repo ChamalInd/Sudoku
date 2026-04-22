@@ -13,9 +13,9 @@ let gameBoard = [
     [['', '', ''], ['', '', ''], ['', '', '']],
     [['', '', ''], ['', '', ''], ['', '', '']]
 ]
+let mistakes = 0;
 
-// increment timer 
-function gamePageTimmer() {    
+function updateGamePage() {   
     const timmer = document.querySelector('.clock');
     
     clearInterval(interval)
@@ -26,16 +26,16 @@ function gamePageTimmer() {
         seconds = time % 60;
         minutes = Math.trunc(time / 60);
 
+        // updating the clock 
         timmer.innerHTML = minutes.toString().padStart(2, '0') + ' : ' + seconds.toString().padStart(2, '0');
 
     }, 1000);
-
 }
 
 // start timer when game page loads 
 document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.clock')) {
-        gamePageTimmer();
+        updateGamePage();
     }
 });
 
@@ -111,22 +111,68 @@ async function syncWithServer() {
     }
 
     try {
-        const response = await fetch('/update-board', {
+        const response = await fetch('/syncServer', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ board: gameBoard, active: selectedBtn.id.split('x').map(Number) })
+            body: JSON.stringify(
+                { 
+                    status: 'Update-Board',
+                    board: gameBoard, 
+                    active: selectedBtn.id.split('x').map(Number) 
+                }
+            )
         });
 
         const serverResponse = await response.json();
+        
         if (serverResponse.server_message === 'incorrect' && selectedBtn.innerText) {
             selectedBtn.classList.add('error');
+            mistakes++;
+            document.getElementById('mistake-count').innerText = mistakes;
         } else if (serverResponse.server_message === 'correct' || selectedBtn.innerText === '') {
             selectedBtn.classList.remove('error');
         } else if (serverResponse.server_message === 'done') {
-            alert('Done');
+            // alert('Done');
+            gameEndFunction();
         }
 
     } catch (error) {
         alert('Sync faild ' + error);
+    }
+}
+
+
+// sending game end data 
+async function gameEndFunction() {
+    document.querySelector('.score-page').style.display = 'block';
+
+    try {
+        const response  = await fetch('/syncServer', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    status: 'Calculate-Score',
+                    totalTime:  time,
+                    totalMistakes: mistakes
+                }
+            )
+        });
+
+        const serverResponse = await response.json();
+
+        let seconds = time % 60;
+        let minutes = Math.trunc(time / 60);
+
+        document.getElementById('score').innerText = serverResponse.score;
+        document.getElementById('base').innerText = serverResponse.base_score;
+        document.getElementById('time').innerText = minutes.toString().padStart(2, '0') + ' : ' + seconds.toString().padStart(2, '0');
+        document.getElementById('time-bonus').innerText = serverResponse.time_bonus;
+        document.getElementById('mistakes').innerText = mistakes;
+        // alert(`${serverResponse.score}, ${serverResponse.time_bonus}, ${serverResponse.base_score}`);
+    }
+
+    catch (error) {
+        alert('Error occured ' + error);
     }
 }

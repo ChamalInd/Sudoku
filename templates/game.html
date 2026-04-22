@@ -36,6 +36,9 @@
     </div>
 
     <div class="right">
+        <div class="status-grid">
+            <p>Mistakes: <span id="mistake-count">0</span></p>
+        </div>
         <div class="btn-grid">
             <button type="button" id="1" onclick="keyPadAction(this)">1</button>
             <button type="button" id="2" onclick="keyPadAction(this)">2</button>
@@ -52,6 +55,30 @@
                 <i class="fa-solid fa-eraser"></i>
             </button>
         </div>
+    </div>
+</div>
+
+<div class="score-page">
+    <div class="top">
+        <h1>congratulations!!!</h1>
+    </div>
+
+    <div class="score">
+        <h2>Score: <span id="score"></span></h2>
+    </div>
+
+    <div class="stats">
+        <h3>Base Score: <span id="base"></span></h3>
+        <h3>Time: <span id="time"></span></h3>
+        <h3>Time Bonus: <span id="time-bonus"></span></h3>
+        <h3>Mistakes: <span id="mistakes"></span></h3>
+    </div>
+
+    <div class="btn-grid">
+        <form action="/game" method="post">
+            <button type="submit" name="action" value="replay">Play Again</button>
+            <button type="submit" name="action" value="home">Home</button>
+        </form>
     </div>
 </div>
 {% endblock %}
