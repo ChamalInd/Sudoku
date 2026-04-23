@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, session
+from flask_session import Session
 
 from helper.board import generate
 
@@ -8,25 +9,40 @@ game_board = None
 full_board = None
 difficulty = None
 
-
 # configuring app
 app = Flask(__name__)
 # secret key for flask flash notifications 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-
-@app.after_request
-def after_request(response):
-    # Ensure responses aren't cached
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
 @app.route('/')
 def index():
+    if 'user_stats' not in session:
+        session['user_stats'] = {
+            'total_score': 0,
+            'play_count': [0, 0, 0, 0],
+            'won': [0, 0, 0, 0],
+            'modes': ['Easy', 'Medium', 'Hard', 'Extreme'],
+            'highest_score': [0, 0, 0, 0],
+            'best_time': [0, 0, 0, 0]
+        }
     return render_template('index.html')
+
+
+@app.route('/stats')
+def profile():
+    times = []
+    for i in session['user_stats']['best_time']:
+        minutes = i // 60
+        seconds = i % 60
+        times.append(f'{minutes:02} : {seconds:02}')
+
+    return render_template('stats.html', times=times)
 
 
 @app.route('/game', methods=['POST', 'GET'])
@@ -37,6 +53,9 @@ def game():
         # checking for difficulty level 
         difficulty_level = request.args.get('difficulty')
         difficulty = levels.index(difficulty_level)
+
+        session['user_stats']['play_count'][difficulty] += 1
+        session.modified = True
         
         # generating the board 
         full_board, game_board = generate(difficulty)
@@ -86,6 +105,18 @@ def sync_with_frontend():
 
         # calculating the score 
         score = (base_score[difficulty] + time_bonus_score) * (0.9 ** mistakes)
+        
+        # updating cookies
+        session['user_stats']['total_score'] += round(score, 0)
+        session['user_stats']['won'][difficulty] += 1
+
+        if session['user_stats']['highest_score'][difficulty] > round(score, 0):
+            session['user_stats']['highest_score'][difficulty] = round(score, 0)
+
+        if session['user_stats']['best_time'][difficulty] > time:
+            session['user_stats']['best_time'][difficulty] = time
+
+        session.modified = True
 
         return jsonify(
             {
