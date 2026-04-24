@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, session
 from flask_session import Session
 
-from helper.board import generate
+from board import generate
 
 # defining global variables 
 levels = ['easy', 'medium', 'hard', 'extreme']
