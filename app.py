@@ -78,7 +78,7 @@ def sync_with_frontend():
         
         server_message = 'incorrect'
         if board[current[0]][current[1]][current[2]] == full_board[current[0]][current[1]][current[2]]:
-            server_message = 'done'
+            server_message = 'correct'
 
         if board == full_board:
             server_message = 'done'
@@ -104,16 +104,16 @@ def sync_with_frontend():
         time_bonus_score = time_bonus[difficulty] - time
 
         # calculating the score 
-        score = (base_score[difficulty] + time_bonus_score) * (0.9 ** mistakes)
+        score = round((base_score[difficulty] + time_bonus_score) * (0.9 ** mistakes))
         
         # updating cookies
-        session['user_stats']['total_score'] += round(score, 0)
+        session['user_stats']['total_score'] += score
         session['user_stats']['won'][difficulty] += 1
 
-        if session['user_stats']['highest_score'][difficulty] > round(score, 0):
-            session['user_stats']['highest_score'][difficulty] = round(score, 0)
+        if session['user_stats']['highest_score'][difficulty] < score:
+            session['user_stats']['highest_score'][difficulty] = score
 
-        if session['user_stats']['best_time'][difficulty] > time:
+        if session['user_stats']['best_time'][difficulty] < time:
             session['user_stats']['best_time'][difficulty] = time
 
         session.modified = True
@@ -121,7 +121,7 @@ def sync_with_frontend():
         return jsonify(
             {
                 'status': 'recived',
-                'score': round(score, 0),
+                'score': score,
                 'base_score': base_score[difficulty],
                 'time_bonus': time_bonus_score
             }

@@ -84,6 +84,65 @@ body {
     transform: scale(1.1);
 }
 
+/* stats styling  */
+.stat-page .top {
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stat-page .top h1 {
+    font-size: 50px;
+    padding: 10px calc(50% - 220px) 10px calc(50% - 190px);
+}
+
+.stat-page .top a {
+    text-decoration: none;
+    color: #212529;
+    font-size: 30px;
+}
+
+.stat-page .top a:hover {
+    transform: scale(1.1);
+}
+
+.stat-page .bottom {
+    text-align: center;
+}
+
+.stat-page .bottom .main {
+    font-size: 35px;
+    margin: 20px 0;
+    font-weight: bolder;
+}
+
+.stat-page .bottom .table {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
+}
+
+.stat-page .bottom .table div {
+    text-align: left;
+    margin-left: 30%;
+}
+
+.stat-page .bottom .table div h2 {
+    font-weight: bolder;
+}
+
+.stat-page .bottom .table div p {
+    font-size: 25px;
+    margin: 0;
+}
+
+.stat-page .bottom .table div table td {
+    background-color: #F8F9FA;
+    border: none;
+}
+
 /* game styling - top bar */
 .top-bar {
     display: flex;
@@ -246,7 +305,6 @@ body {
     font-size: 20px;
 }
 
-
 /* styling score page  */
 .score-page {
     display: none;
@@ -301,6 +359,19 @@ body {
         margin: 20px;
         width: calc(100% - 40px);
     }
+
+    .stat-page .bottom .table {
+        grid-template-columns: repeat(1, auto);
+        grid-template-rows: repeat(4, auto);
+    }
+
+    .stat-page .bottom .table div {
+        margin: 0 20px;
+    }
+
+    .stat-page .bottom .table div table {
+    width: 100%;
+}
 }
 
 @media screen and (max-width: 550px) {

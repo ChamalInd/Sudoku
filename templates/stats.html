@@ -1,19 +1,50 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<div>
-    <h1>Game Stats</h1>
-    <a href="/">Back</a>
-    <div>
-        <h2>Total Score : {{ session['user_stats']['total_score'] }}</h2>
-        <div>
+<div class="stat-page">
+    <div class="top">
+        <h1>Game Stats</h1>
+        <a href="/">Back</a>
+    </div>
+    <div class="bottom">
+        <h2 class="main">Total Score : {{ session['user_stats']['total_score'] }}</h2>
+        <div class="table">
             {% for i in range(0, 4) %}
             <div>
-                <h2>Mode : {{ session['user_stats']['modes'][i] }}</h2>
-                <h3>Games Played : {{ session['user_stats']['play_count'][i] }}</h3>
-                <h3>Games Completed : {{ session['user_stats']['won'][i] }}</h3>
-                <h3>Highest Score : {{ session['user_stats']['highest_score'][i] }}</h3>
-                <h3>Best Time : {{ times[i] }}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <td colspan="3">
+                                <h2>Mode : {{ session['user_stats']['modes'][i] }}</h2>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><p>Games Played</p></td>
+                            <td><p> : </p></td>
+                            <td><p>{{ session['user_stats']['play_count'][i] }}</p></td>
+                        </tr>
+
+                        <tr>
+                            <td><p>Games Completed</p></td>
+                            <td><p> : </p></td>
+                            <td><p>{{ session['user_stats']['won'][i] }}</p></td>
+                        </tr>
+
+                        <tr>
+                            <td><p>Highest Score</p></td>
+                            <td><p> : </p></td>
+                            <td><p>{{ session['user_stats']['highest_score'][i] }}</p></td>
+                        </tr>
+
+                        <tr>
+                            <td><p>Best Time</p></td>
+                            <td><p> : </p></td>
+                            <td><p>{{ times[i] }}</p></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             {% endfor %}
         </div>
