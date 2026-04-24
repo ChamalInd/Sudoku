@@ -6,6 +6,9 @@ Simple Sudoku Player built using Python and HTML. There are four modes in tha ga
 
 Currently no database is connected to the server and all the game statistics are stored temporally in browser cache using Flask Sessions. Therefore all the data will be erased once the browser is closed. 
 
+<img width="1552" height="906" alt="2026-04-24_10-05-24 PM" src="https://github.com/user-attachments/assets/58614126-cf67-415c-abac-2883e7fe5869" />
+
+
 ### Tech Stack
 - Back End: Python
 - Front End: HTML, CSS, JS
